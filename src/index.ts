@@ -1,4 +1,4 @@
-/* eslint-disable no-console */
+import { serverTiming } from '@elysiajs/server-timing'
 import staticPlugin from '@elysiajs/static'
 import { Elysia } from 'elysia'
 
@@ -12,27 +12,33 @@ import { securitySetup } from './app/setups/security.setup'
 import dataSource from './shared/configs/data-source.config'
 import { environment } from './shared/constants'
 
-try {
-  const { isInitialized } = await dataSource.initialize()
-  console.log('Database initialize status:', isInitialized)
+const { isInitialized } = await dataSource.initialize()
+// eslint-disable-next-line no-console
+console.log('Database initialize status:', isInitialized)
 
-  const app = new Elysia()
-    .use(securitySetup)
-    .use(staticPlugin({ prefix: '/' }))
-    .use(apiDocSetup)
-    .use(hookSetup)
-    .get('/', ({ set }) => {
-      set.redirect = '/docs'
-    })
-    .group('/api', (app) =>
-      app.use(authController).use(userController).use(todoController),
-    )
-    .use(staticDataController)
-    .listen(environment.port)
-
-  console.log(
-    `🦊 Elysia is running at ${app.server?.hostname}:${app.server?.port}`,
+const app = new Elysia()
+  .use(securitySetup)
+  .use(staticPlugin({ prefix: '/' }))
+  .use(hookSetup)
+  .use(staticDataController)
+  .use(apiDocSetup)
+  .get('/', ({ redirect }) => {
+    return redirect('/docs')
+  })
+  .use(
+    serverTiming({
+      allow: ({ request }) => {
+        const { pathname } = new URL(request.url)
+        return pathname.startsWith('/api')
+      },
+    }),
   )
-} catch (e) {
-  console.log(e)
-}
+  .group('/api', (app) =>
+    app.use(authController).use(userController).use(todoController),
+  )
+  .listen(environment.port)
+
+// eslint-disable-next-line no-console
+console.log(
+  `🦊 Elysia is running at http://${app.server?.hostname}:${app.server?.port}`,
+)

@@ -8,6 +8,11 @@ export class UserRepository extends Repository<User> {
     super(User, dataSource.manager)
   }
 
+  public async checkEmailExists(email: string) {
+    const count = await this.count({ where: { email } })
+    return count > 0
+  }
+
   public async registerUser(email: string, password: string) {
     return await this.save(this.create({ email, password }))
   }

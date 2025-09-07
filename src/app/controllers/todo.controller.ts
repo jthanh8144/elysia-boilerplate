@@ -1,6 +1,4 @@
 import { Elysia } from 'elysia'
-import createHttpError from 'http-errors'
-import { StatusCodes } from 'http-status-codes'
 
 import { IdParams, MessageResponse } from '../dtos/common.dto'
 import { CreateTodoResDto, TodoDto, UpdateTodoResDto } from '../dtos/todo.dto'
@@ -12,15 +10,11 @@ export const todoController = new Elysia({ prefix: '/todos', tags: ['Todo'] })
   .post(
     '/',
     async ({ user, body }) => {
-      try {
-        const { title, description } = body
-        const todo = await todoRepository.save(
-          todoRepository.create({ title, description, userId: user.id }),
-        )
-        return todo
-      } catch (err) {
-        throw createHttpError(StatusCodes.INTERNAL_SERVER_ERROR)
-      }
+      const { title, description } = body
+      const todo = await todoRepository.save(
+        todoRepository.create({ title, description, userId: user.id }),
+      )
+      return todo
     },
     { body: TodoDto, response: CreateTodoResDto },
   )

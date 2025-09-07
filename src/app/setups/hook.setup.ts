@@ -8,7 +8,7 @@ export const hookSetup = (app: Elysia) =>
   app
     .onError({ as: 'global' }, ({ code, error, request, path }) => {
       logger.error(
-        `[${request.method}] ${path} >> StatusCode:: ${code}, Message:: ${error.message}`,
+        `[${request.method}] ${path} >> StatusCode:: ${code}, Message:: ${'message' in error ? error.message : 'Some error happened'}`,
         error,
       )
       if (error instanceof HttpError) {
@@ -20,11 +20,15 @@ export const hookSetup = (app: Elysia) =>
         case 'NOT_FOUND':
           return createHttpError(StatusCodes.NOT_FOUND)
       }
+      return createHttpError(StatusCodes.INTERNAL_SERVER_ERROR, {
+        message: 'message' in error ? error.message : 'Some error happened',
+      })
     })
     .mapResponse(({ response }) => {
       if (response instanceof Response) {
         return response
-      } else if (typeof response === 'object') {
+      }
+      if (typeof response === 'object') {
         return Response.json(response)
       }
     })

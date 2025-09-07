@@ -1,6 +1,6 @@
-import { swagger } from '@elysiajs/swagger'
+import { openapi } from '@elysiajs/openapi'
 
-export const apiDocSetup = swagger({
+export const apiDocSetup = openapi({
   path: '/docs',
   documentation: {
     info: {

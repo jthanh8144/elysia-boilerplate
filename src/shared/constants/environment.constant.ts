@@ -1,6 +1,8 @@
+import 'dotenv/config'
+
 export const environment = {
   env: process.env.NODE_ENV ?? 'local',
-  port: +(process.env.APP_PORT ?? 0),
+  port: +(process.env.APP_PORT ?? '3000'),
   database: {
     name: process.env.DB_NAME,
     username: process.env.DB_USER,

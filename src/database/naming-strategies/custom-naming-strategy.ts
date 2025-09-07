@@ -1,4 +1,5 @@
-import crypto from 'crypto'
+import crypto from 'node:crypto'
+
 import {
   DefaultNamingStrategy,
   type NamingStrategyInterface,
@@ -13,7 +14,6 @@ class CustomNamingStrategy
     tableOrName: Table | string,
     columnNames: string[],
     referencedTablePath?: string,
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     _referencedColumnNames?: string[],
   ): string {
     tableOrName =

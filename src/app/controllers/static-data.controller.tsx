@@ -1,4 +1,4 @@
-import { html } from '@elysiajs/html'
+import { html, Html } from '@elysiajs/html'
 import { Elysia } from 'elysia'
 
 export const staticDataController = new Elysia({ prefix: '/static' })
@@ -9,7 +9,7 @@ export const staticDataController = new Elysia({ prefix: '/static' })
           <title>Elysia HTML Page</title>
         </head>
         <body>
-          <h1 style="color: red;">Hello World!</h1>
+          <h1 style="color: red;">Hello World HTML!</h1>
         </body>
       </html>`
   })
@@ -20,7 +20,7 @@ export const staticDataController = new Elysia({ prefix: '/static' })
           <title>Elysia JSX Page</title>
         </head>
         <body>
-          <h1 style="color: blue;">Hello World!</h1>
+          <h1 style="color: blue;">Hello World JSX!</h1>
         </body>
       </html>
     )
