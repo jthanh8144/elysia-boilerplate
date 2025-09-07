@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { createLogger, format, type Logger, transports } from 'winston'
 import { type ConsoleTransportOptions } from 'winston/lib/winston/transports'
 

@@ -1,6 +1,5 @@
-import 'dotenv/config'
-
 import { type JwtPayload, sign, verify } from 'jsonwebtoken'
+import type { StringValue } from 'ms'
 
 import { environment } from '../../shared/constants'
 
@@ -18,7 +17,7 @@ export interface JwtResponse extends JwtPayload {
 
 export const getAccessToken = (data: SignToken) => {
   return sign(data, environment.jwt.accessSecret, {
-    expiresIn: process.env.ACCESS_TOKEN_LIFE,
+    expiresIn: environment.jwt.accessLife as StringValue,
   })
 }
 
