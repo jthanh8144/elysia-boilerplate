@@ -1,9 +1,10 @@
 import { Elysia } from 'elysia'
 
-import { IdParams, MessageResponse } from '../dtos/common.dto'
-import { CreateTodoResDto, TodoDto, UpdateTodoResDto } from '../dtos/todo.dto'
+import { idParams, messageResponse } from '../dtos/common.dto'
+import { createTodoResDto, todoDto, updateTodoResDto } from '../dtos/todo.dto'
 import { authMiddleware } from '../middlewares/auth.middleware'
 import { todoRepository } from '../repositories'
+import { TodoService } from '../services/todo.service'
 
 export const todoController = new Elysia({ prefix: '/todos', tags: ['Todo'] })
   .use(authMiddleware)
@@ -11,30 +12,32 @@ export const todoController = new Elysia({ prefix: '/todos', tags: ['Todo'] })
     '/',
     async ({ user, body }) => {
       const { title, description } = body
-      const todo = await todoRepository.save(
-        todoRepository.create({ title, description, userId: user.id }),
-      )
-      return todo
+      return await TodoService.save(todoRepository, {
+        title,
+        description,
+        userId: user.id,
+      })
     },
-    { body: TodoDto, response: CreateTodoResDto },
+    { body: todoDto, response: createTodoResDto },
   )
   .put(
     '/:id',
     async ({ user, params, body }) => {
       const { id } = params
       const { title, description } = body
-      const todo = await todoRepository.save(
-        todoRepository.create({ id, title, description, userId: user.id }),
-      )
-      return todo
+      return await TodoService.save(todoRepository, {
+        id,
+        title,
+        description,
+        userId: user.id,
+      })
     },
-    { params: IdParams, body: TodoDto, response: UpdateTodoResDto },
+    { params: idParams, body: todoDto, response: updateTodoResDto },
   )
   .delete(
     '/:id',
     async ({ params }) => {
-      await todoRepository.delete(params.id)
-      return { message: 'Deleted' }
+      return await TodoService.delete(params.id)
     },
-    { params: IdParams, body: TodoDto, response: MessageResponse },
+    { params: idParams, body: todoDto, response: messageResponse },
   )

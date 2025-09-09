@@ -1,19 +1,22 @@
 import { Elysia } from 'elysia'
 
+import { userProfileResDto, userTodosResDto } from '../dtos/user.dto'
 import { authMiddleware } from '../middlewares/auth.middleware'
-import { profileRepository, todoRepository } from '../repositories'
+import { UserService } from '../services/user.service'
 
 export const userController = new Elysia({ prefix: '/users', tags: ['User'] })
   .use(authMiddleware)
-  .get('/profile', async ({ user }) => {
-    const profile = await profileRepository.findOne({
-      where: { userId: user.id },
-    })
-    return profile
-  })
-  .get('/todos', async ({ user }) => {
-    const todos = await todoRepository.find({
-      where: { userId: user.id },
-    })
-    return todos
-  })
+  .get(
+    '/profile',
+    async ({ user }) => {
+      return await UserService.getUserProfile(user.id)
+    },
+    { response: userProfileResDto },
+  )
+  .get(
+    '/todos',
+    async ({ user }) => {
+      return await UserService.getUserTodos(user.id)
+    },
+    { response: userTodosResDto },
+  )
