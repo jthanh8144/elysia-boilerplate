@@ -1,7 +1,7 @@
 import { type JwtPayload, sign, verify } from 'jsonwebtoken'
 import type { StringValue } from 'ms'
 
-import { environment } from '../../shared/constants'
+import { environment } from '@/constants/index'
 
 export interface SignToken {
   id: number

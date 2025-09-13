@@ -1,6 +1,6 @@
 # Elysia Boilerplate
 
-Tech stack: Bun, Elysia, typeorm, jsonwebtoken, winston
+Tech stack: Bun, Elysia, PostgreSQL, typeorm, jsonwebtoken, winston
 
 ## Development
 
@@ -18,8 +18,28 @@ To start the development server run:
 bun dev
 ```
 
-Open http://localhost:3000/ with your browser to see the result.
+## Database migration
+
+- Generate migration file
+
+  ```
+  bun migration:generate <file-name>
+  ```
+
+- Running migration
+
+  ```
+  bun migration:run
+  ```
+
+- Revert migration
+
+  ```
+  bun migration:revert
+  ```
 
 ## Note
 
-Currently, the typeorm migration and the getting entities using entity path aren't working. So I temporarily set the `synchronize` to true, comment the `migrations` and `entities` using path and use the object `entities`
+- `TypeORM` migrations require `ts-node` to transpile TypeScript to JavaScript, and `tsconfig-paths` to resolve path aliases. Therefore, both must be installed as dev dependencies.
+
+- Currently, the `elysia-compression` plugin has [an issue](https://github.com/elysiajs/elysia/issues/979), so I’m using a custom compression plugin based on [this repository](https://github.com/Borderliner/elysia-plugins/blob/main/compression.plugin.ts). I’ll switch back to the recommended compression plugin from the Elysia documentation once the issue is fixed.

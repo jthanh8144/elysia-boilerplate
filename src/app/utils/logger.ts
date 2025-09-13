@@ -2,7 +2,7 @@
 import { createLogger, format, type Logger, transports } from 'winston'
 import { type ConsoleTransportOptions } from 'winston/lib/winston/transports'
 
-import { environment } from '../../shared/constants'
+import { environment } from '@/constants/index'
 
 class LoggerProvider {
   private location: string

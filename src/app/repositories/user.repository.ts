@@ -1,6 +1,7 @@
 import { Repository } from 'typeorm'
 
-import dataSource from '../../shared/configs/data-source.config'
+import dataSource from '@/configs/data-source.config'
+
 import { User } from '../entities/user.entity'
 
 export class UserRepository extends Repository<User> {

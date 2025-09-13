@@ -42,6 +42,6 @@ export default defineConfig([
       '@typescript-eslint/no-explicit-any': 'warn',
       '@typescript-eslint/no-empty-object-type': 'off'
     },
-    ignores: ['node_modules', 'dist', 'coverage', 'eslint.config.mjs'],
+    ignores: ['node_modules/*', 'dist/*', 'coverage/*', 'scripts/*', 'eslint.config.mjs'],
   },
 ])
