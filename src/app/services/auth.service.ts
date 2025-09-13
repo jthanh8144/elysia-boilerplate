@@ -1,6 +1,7 @@
 import { StatusCodes } from 'http-status-codes'
 
-import dataSource from '../../shared/configs/data-source.config'
+import dataSource from '@/configs/data-source.config'
+
 import type { LoginDto, RegisterDto } from '../dtos/auth.dto'
 import { profileRepository, userRepository } from '../repositories'
 import { createAppError, createUnauthorizedError } from '../utils/errors'

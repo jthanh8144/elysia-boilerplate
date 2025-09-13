@@ -1,8 +1,9 @@
+import path from 'node:path'
+
 import { DataSource } from 'typeorm'
 
-import * as entities from '../../app/entities'
-import customNamingStrategy from '../../database/naming-strategies/custom-naming-strategy'
-import { environment } from '../constants'
+import { environment } from '@/constants/index'
+import customNamingStrategy from '@/database/naming-strategies/custom-naming-strategy'
 
 const dataSource = new DataSource({
   type: 'postgres',
@@ -24,11 +25,14 @@ const dataSource = new DataSource({
       },
     ],
   },
-  // entities: [path.join(__dirname, '/../../app/entities/*.entity{.ts,.js}')],
-  // migrations: [path.join(__dirname, '/../../database/migrations/*{.ts,.js}')],
-  entities: Object.values(entities),
+  entities: [
+    path.join(__dirname, '..', '..', 'app/entities/*.entity{.ts,.js}'),
+  ],
+  migrations: [
+    path.join(__dirname, '..', '..', 'database/migrations/*{.ts,.js}'),
+  ],
   namingStrategy: customNamingStrategy,
-  synchronize: true,
+  synchronize: false,
   logging: false,
 })
 

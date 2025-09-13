@@ -33,5 +33,13 @@
     // Decorators
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-  }
+
+    "paths": {
+      "@/configs/*": ["./src/shared/configs/*"],
+      "@/constants/*": ["./src/shared/constants/*"],
+      "@/database/*": ["./src/database/*"]
+    }
+  },
+  "include": ["src/**/*.ts"],
+  "exclude": ["node_modules", "dist"]
 }
