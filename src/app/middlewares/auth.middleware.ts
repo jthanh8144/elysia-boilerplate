@@ -6,8 +6,15 @@ import { verifyToken } from '../utils/jwt'
 
 export const authMiddleware = (app: Elysia) =>
   app.derive(({ headers, status }) => {
+    const token = headers['authorization']?.startsWith('Bearer ')
+      ? headers['authorization'].slice(7)
+      : null
+    if (!token) {
+      return status(StatusCodes.UNAUTHORIZED, {
+        message: 'Authorization header is required',
+      })
+    }
     try {
-      const token = headers.authorization?.split(' ')[1] ?? ''
       const user = verifyToken(token)
       return { user }
     } catch (err) {

@@ -4,8 +4,6 @@ import { helmet } from 'elysia-helmet'
 import { ip } from 'elysia-ip'
 import { rateLimit } from 'elysia-rate-limit'
 
-import { compressionPlugin } from '../middlewares/compression.middleware'
-
 export const securitySetup = (app: Elysia) =>
   app
     .use(cors())
@@ -21,4 +19,3 @@ export const securitySetup = (app: Elysia) =>
     )
     .use(ip())
     .use(rateLimit())
-    .use(compressionPlugin())

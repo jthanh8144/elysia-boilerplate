@@ -40,7 +40,8 @@ export default defineConfig([
       '@typescript-eslint/explicit-function-return-type': 'off',
       '@typescript-eslint/explicit-module-boundary-types': 'off',
       '@typescript-eslint/no-explicit-any': 'warn',
-      '@typescript-eslint/no-empty-object-type': 'off'
+      '@typescript-eslint/no-empty-object-type': 'off',
+      '@typescript-eslint/no-unsafe-assignment': 'warn'
     },
     ignores: ['node_modules/*', 'dist/*', 'coverage/*', 'scripts/*', 'eslint.config.mjs'],
   },
